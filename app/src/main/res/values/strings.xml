@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Category App</string>
+    <string name="search">search</string>
+    <string name="category_name">Category name</string>
+    <string name="category">Category</string>
+    <string name="save">Save</string>
+
+    <string-array name="types">
+        <item>all</item>
+        <item>name</item>
+        <item>age</item>
+    </string-array>
+</resources>
