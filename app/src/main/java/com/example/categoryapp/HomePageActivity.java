@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,6 +50,7 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        setTitle("Notes");
 
         final List<com.example.categoryapp.Spinner> arrayList = new ArrayList<>();
         final ArrayAdapter<com.example.categoryapp.Spinner> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
@@ -92,14 +95,14 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tutorialsName = parent.getItemAtPosition(position).toString();
                 Toast.makeText(parent.getContext(), "Selected: " + tutorialsName, Toast.LENGTH_LONG).show();
-                    noteViewModel.getNodesByCategory(tutorialsName);
-                    noteViewModel.getAllNotes().observe(HomePageActivity.this, new Observer<List<Note>>() {
-                        @Override
-                        public void onChanged(@Nullable List<Note> notes) {
-                            Log.d("qweqwe", "onChanged2: " + notes);
-                            adapter.update(notes);
-                        }
-                    });
+                noteViewModel.getNodesByCategory(tutorialsName);
+                noteViewModel.getAllNotes().observe(HomePageActivity.this, new Observer<List<Note>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Note> notes) {
+                        Log.d("qweqwe", "onChanged2: " + notes);
+                        adapter.update(notes);
+                    }
+                });
 
 
 //                exampleList.clear();
@@ -137,11 +140,20 @@ public class HomePageActivity extends AppCompatActivity implements AdapterView.O
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (button.getText().toString().equals("search")) {
+                if (editText1.getVisibility() == View.INVISIBLE) {
                     spinner.setVisibility(View.INVISIBLE);
                     editText1.setVisibility(View.VISIBLE);
+                    editText1.setSelection(0);
                     button.setText("done");
+                    editText1.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(editText1, InputMethodManager.SHOW_IMPLICIT);
                 } else {
+                    InputMethodManager inputManager = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
                     spinner.setVisibility(View.VISIBLE);
                     editText1.setVisibility(View.INVISIBLE);
                     button.setText("search");

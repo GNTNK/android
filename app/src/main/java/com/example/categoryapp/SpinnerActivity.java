@@ -31,6 +31,7 @@ public class SpinnerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spinner);
+        setTitle("Spinners");
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         FloatingActionButton buttonAddSpinner = findViewById(R.id.button_add_spinner);

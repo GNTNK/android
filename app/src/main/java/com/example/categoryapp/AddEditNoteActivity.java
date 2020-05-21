@@ -65,6 +65,7 @@ public class AddEditNoteActivity extends AppCompatActivity implements AdapterVie
 
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
